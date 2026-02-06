@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cryptohive"
+version = "0.1.0"
+description = "CryptoHive - Multi-agent Web3 intelligence swarm powered by CrewAI"
+requires-python = ">=3.11"
+dependencies = [
+    "crewai[tools,anthropic]>=0.108.0",
+    "pydantic>=2.0",
+    "requests>=2.31",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+cryptohive = "cryptohive.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

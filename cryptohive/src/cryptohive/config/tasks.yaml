@@ -1,0 +1,86 @@
+market_data_task:
+  description: >
+    Analyze market data for the following query: {query}
+
+    Use your tools to:
+    1. Get current price, volume, market cap, and 24h change for the main asset(s)
+    2. Get OHLCV data for recent price action (7-day)
+    3. Get top gainers/losers for market context
+    4. Get full coin details if a specific coin is mentioned
+
+    Present findings as a concise MARKET SNAPSHOT covering: Asset, Price, Volume, 24h Change, Volatility notes.
+  expected_output: >
+    A structured market snapshot with price, volume, market cap, 24h/7d changes,
+    OHLCV summary, and notable movers. Include specific numbers.
+  agent: market_data_agent
+
+onchain_task:
+  description: >
+    Analyze on-chain data for the following query: {query}
+
+    Use your tools to:
+    1. Check top holder concentration (if token address is available)
+    2. Look at recent large trades
+    3. Analyze DEX pool liquidity
+    4. Run DexTools analysis for BSC tokens if applicable
+
+    If no specific token address is available, report what on-chain data you can gather
+    and note the limitation.
+
+    Present findings as ON-CHAIN SIGNALS covering: Whale activity, Net flows, Contract events.
+  expected_output: >
+    On-chain intelligence including whale concentration, recent large trades,
+    pool liquidity analysis, and any security flags. Note data limitations.
+  agent: onchain_agent
+
+sentiment_task:
+  description: >
+    Analyze market sentiment for the following query: {query}
+
+    Use your tools to:
+    1. Search for recent crypto news and social media sentiment
+    2. Get the Fear & Greed Index
+    3. Check trending coins and categories on CoinGecko
+
+    Present findings as SENTIMENT covering: Overall bias, Dominant narrative, Momentum shift.
+  expected_output: >
+    Sentiment analysis including news summary, Fear & Greed reading, trending context,
+    overall bias (bullish/bearish/neutral), and dominant narrative.
+  agent: sentiment_agent
+
+macro_task:
+  description: >
+    Analyze macro market context for the following query: {query}
+
+    Use your tools to:
+    1. Get global market data (total market cap, BTC dominance, 24h volume)
+    2. Get market overview of top 10 coins
+
+    Present findings as MACRO CONTEXT covering: Risk regime, BTC dominance, Total market cap trend.
+  expected_output: >
+    Macro analysis including total market cap, BTC dominance, market cap 24h change,
+    top coin performance overview, and risk regime assessment (risk-on/risk-off).
+  agent: macro_agent
+
+strategy_task:
+  description: >
+    Synthesize all findings for the query: {query}
+
+    You have the following specialist reports:
+    - Market Data: {market_data}
+    - On-Chain: {onchain_data}
+    - Sentiment: {sentiment_data}
+    - Macro: {macro_data}
+
+    Produce a SYNTHESIS section with:
+    1. Market bias (bullish / bearish / neutral) with reasoning
+    2. Key drivers (top 3 factors)
+    3. Invalidation conditions (what would flip the thesis)
+    4. Confidence score (1-10) based on data quality and signal alignment
+
+    Also compile the final formatted report with ALL sections.
+  expected_output: >
+    Complete formatted report with all sections:
+    MARKET SNAPSHOT, ON-CHAIN SIGNALS, SENTIMENT, MACRO CONTEXT, SYNTHESIS,
+    CONFIDENCE SCORE (X/10), and DATA SOURCES USED.
+  agent: strategy_agent
